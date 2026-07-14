@@ -1,0 +1,117 @@
+/* ---- App Shell ---- */
+.app-layout {
+    display: flex;
+    min-height: 100vh;
+  }
+  
+  .navbar {
+    width: 260px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-right: 1px solid;
+    padding: 16px;
+  }
+  
+  .navbar__nav ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .main-content {
+    flex: 1;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+  
+  /* ---- Page Header ---- */
+  .page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  /* ---- Content Grid ---- */
+  .content-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+  
+  /* ---- Generic section boxes (temporary, for visualizing regions) ---- */
+  .message-composer,
+  .progress-timeline,
+  .technical-details,
+  .communication-preview {
+    border: 1px solid;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .progress-timeline__step {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  
+  .technical-details__header {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .technical-details__key-info {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  
+  .communication-preview__avatars {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .communication-preview__row {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid;
+    padding: 4px 0;
+  }
+  
+  .status-card {
+    border: 1px solid;
+    padding: 8px;
+  }
+  
+  .status-pill {
+    border: 1px solid;
+    padding: 4px 8px;
+    display: inline-flex;
+    gap: 4px;
+  }
+  
+  /* ---- Responsive: collapse to single column below 1024px ---- */
+  @media (max-width: 1024px) {
+    .content-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .app-layout {
+      flex-direction: column;
+    }
+    .navbar {
+      width: 100%;
+      flex-direction: row;
+      justify-content: space-between;
+    }
+  }
