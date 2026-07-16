@@ -8,14 +8,40 @@ import BobPanel from "../../components/BobPanel/BobPanel";
 import StatusCard from "../../components/StatusCard/StatusCard";
 import AnalyticsChart from "../../components/AnalyticsChart/AnalyticsChart";
 import SessionSummary from "../../components/SessionSummary/SessionSummary";
+import { initialSimulation } from "../../data/mockData";
 
 export default function Dashboard() {
-  const [noiseLevel, setNoiseLevel] = useState(3);
-  const [eveEnabled, setEveEnabled] = useState(false);
+  const [simulation, setSimulation] = useState(initialSimulation);
+
+  const noiseLevel = simulation.channel.noise;
+  const eveEnabled = simulation.channel.eve;
+
+  const setNoiseLevel = (val) =>
+    setSimulation((prev) => ({
+      ...prev,
+      channel: { ...prev.channel, noise: val },
+    }));
+
+  const setEveEnabled = (val) =>
+    setSimulation((prev) => ({
+      ...prev,
+      channel: { ...prev.channel, eve: val },
+    }));
+
+  const handleReset = () => setSimulation(initialSimulation);
+
+  const handleRun = () => {
+    if (!simulation.alice.message.trim()) return;
+    setSimulation((prev) => ({ ...prev, status: "running", protocol: { stage: 0 } }));
+  };
 
   return (
     <div className="app-shell">
-      <TopBar noiseLevel={noiseLevel} eveEnabled={eveEnabled} />
+      <TopBar
+        noiseLevel={noiseLevel}
+        eveEnabled={eveEnabled}
+        onReset={handleReset}
+      />
 
       <div className="body">
         <aside className="sidebar">
@@ -25,30 +51,35 @@ export default function Dashboard() {
             setNoiseLevel={setNoiseLevel}
             eveEnabled={eveEnabled}
             setEveEnabled={setEveEnabled}
+            onRun={handleRun}
           />
         </aside>
 
         <main className="main-content">
           <div className="panels-row">
-            <AlicePanel />
-            <QuantumChannelPanel />
-            <BobPanel />
+            <AlicePanel
+              simulation={simulation}
+              setSimulation={setSimulation}
+            />
+            <QuantumChannelPanel
+              currentStage={simulation.protocol.stage}
+              simulation={simulation}
+            />
+            <BobPanel simulation={simulation} setSimulation={setSimulation} />
           </div>
 
           <div className="bottom-row">
             <div className="quantum-statistics">
               <p>Quantum Statistics</p>
-              <StatusCard label="QBER" value="--%" />
-              <StatusCard label="Key Length" value="-- bits" />
-              <StatusCard label="Photons Sent" value="----" />
+              <StatusCard label="QBER" value={`${simulation.analytics.qber}%`} />
+              <StatusCard label="Key Length" value={`${simulation.analytics.keyLength} bits`} />
+              <StatusCard label="Photons Sent" value={simulation.analytics.photonsSent} />
             </div>
-
             <div className="photon-chart">
               <p>Photon Transmission Overview</p>
-              <AnalyticsChart />
+              <AnalyticsChart simulation={simulation} />
             </div>
-
-            <SessionSummary />
+            <SessionSummary simulation={simulation} />
           </div>
         </main>
       </div>

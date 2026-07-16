@@ -131,6 +131,28 @@ html, body {
   margin-top: var(--space-sm);
 }
 
+.chat-window__messages {
+  max-height: 200px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.chat-window__empty {
+  opacity: 0.5;
+  font-style: italic;
+}
+
+.chat-window__bubble--alice {
+  align-self: flex-end;
+  text-align: right;
+}
+
+.chat-window__bubble--bob {
+  align-self: flex-start;
+}
+
 .progress-timeline {
   list-style: none;
   padding: 0;
@@ -169,17 +191,6 @@ html, body {
   border: 1px solid;
   padding: var(--space-sm);
 }
-
-.bob-panel__reply-options {
-  display: flex;
-  gap: var(--space-sm);
-  flex-wrap: wrap;
-}
-
-.bob-panel__quick-reply input {
-  width: 100%;
-}
-
 /* ---- Bottom Row (Stats / Chart / Session Summary) ---- */
 .bottom-row {
   display: grid;
@@ -327,4 +338,46 @@ button:disabled {
   display: flex;
   flex-direction: column;
   gap: var(--space-md);
+}
+.bob-panel__technical {
+  border: 1px solid;
+  padding: var(--space-sm);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.bob-panel__technical-toggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  padding: 0;
+  font-size: 0.85rem;
+  opacity: 0.7;
+}
+
+.bob-panel__technical-toggle:hover {
+  opacity: 1;
+}
+
+.bob-panel__technical-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.bob-panel__technical-row {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  border-bottom: 1px solid;
+  padding-bottom: var(--space-xs);
+}
+
+.bob-panel__technical-row code {
+  font-family: monospace;
+  font-size: 0.8rem;
+  word-break: break-all;
+  opacity: 0.8;
 }

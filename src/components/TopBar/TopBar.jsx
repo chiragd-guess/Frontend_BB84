@@ -1,6 +1,6 @@
 import StatusPill from "../StatusPill/StatusPill";
 
-export default function TopBar({ noiseLevel, eveEnabled }) {
+export default function TopBar({ noiseLevel, eveEnabled, onReset }) {
   return (
     <header className="top-bar">
       <div className="top-bar__brand">
@@ -10,13 +10,11 @@ export default function TopBar({ noiseLevel, eveEnabled }) {
           <p>App Subtitle</p>
         </div>
       </div>
-
       <div className="top-bar__pills">
         <StatusPill label="Noise Level" value={`${noiseLevel}%`} />
         <StatusPill label="Eve Interference" value={eveEnabled ? "ON" : "OFF"} />
       </div>
-
-      <button>Reset Simulation</button>
+      <button onClick={onReset}>Reset Simulation</button>
     </header>
   );
 }

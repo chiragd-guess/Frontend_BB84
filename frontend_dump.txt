@@ -1,0 +1,811 @@
+
+
+===== src/styles/variables.css =====
+:root {
+    /* ---- Spacing Scale ---- */
+    --space-xs: 4px;
+    --space-sm: 8px;
+    --space-md: 12px;
+    --space-lg: 16px;
+    --space-xl: 24px;
+    --space-2xl: 32px;
+  
+    /* ---- Layout Sizing ---- */
+    --sidebar-width: clamp(200px, 18vw, 260px);
+    --content-max-width: 1600px;
+  
+    /* ---- Breakpoints (for reference in comments; media queries use raw px) ---- */
+    --bp-tablet: 768px;
+    --bp-laptop: 1024px;
+    --bp-desktop: 1440px;
+  }
+
+===== src/styles/globals.css =====
+/* ---- Reset / Safety ---- */
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+/* ---- App Shell ---- */
+.app-shell {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  width: 100%;
+}
+
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-md);
+  border-bottom: 1px solid;
+  padding: var(--space-md) var(--space-xl);
+}
+
+.top-bar__brand,
+.top-bar__pills {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-md);
+}
+
+.body {
+  display: flex;
+  flex: 1;
+  min-width: 0; /* prevents flex children from forcing overflow */
+}
+
+.sidebar {
+  width: var(--sidebar-width);
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+  border-right: 1px solid;
+  padding: var(--space-lg);
+  overflow-y: auto;
+}
+
+.navbar ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.quick-controls {
+  border: 1px solid;
+  padding: var(--space-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.quick-controls__row {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+  border-bottom: 1px solid;
+  padding: var(--space-xs) 0;
+}
+
+.main-content {
+  flex: 1;
+  min-width: 0;
+  padding: var(--space-xl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xl);
+  max-width: var(--content-max-width);
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* ---- Panels Row (Alice / Quantum Channel / Bob) ---- */
+.panels-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr) minmax(0, 1fr);
+  gap: var(--space-xl);
+}
+
+.alice-panel,
+.quantum-channel-panel,
+.bob-panel {
+  border: 1px solid;
+  padding: var(--space-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  min-width: 0;
+}
+
+.message-composer {
+  border: 1px solid;
+  padding: var(--space-sm);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.message-composer textarea {
+  width: 100%;
+  resize: vertical;
+}
+
+.chat-window {
+  border: 1px solid;
+  padding: var(--space-sm);
+  overflow-wrap: break-word;
+}
+
+.chat-window__bubble {
+  border: 1px solid;
+  padding: var(--space-sm);
+  margin-top: var(--space-sm);
+}
+
+.progress-timeline {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.progress-timeline__step {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+  border-bottom: 1px solid;
+  padding: var(--space-xs) 0;
+}
+
+.key-exchange-visualizer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  border: 1px solid;
+  padding: var(--space-lg);
+}
+
+.quantum-channel-panel__banner {
+  border: 1px solid;
+  padding: var(--space-md);
+  text-align: center;
+}
+
+.bob-panel__decrypted,
+.bob-panel__quick-reply {
+  border: 1px solid;
+  padding: var(--space-sm);
+}
+
+.bob-panel__reply-options {
+  display: flex;
+  gap: var(--space-sm);
+  flex-wrap: wrap;
+}
+
+.bob-panel__quick-reply input {
+  width: 100%;
+}
+
+/* ---- Bottom Row (Stats / Chart / Session Summary) ---- */
+.bottom-row {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-xl);
+}
+
+.quantum-statistics,
+.photon-chart,
+.session-summary {
+  border: 1px solid;
+  padding: var(--space-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  min-width: 0;
+}
+
+.analytics-chart {
+  border: 1px solid;
+  padding: var(--space-xl);
+  text-align: center;
+}
+
+.status-card {
+  border: 1px solid;
+  padding: var(--space-sm);
+}
+
+.status-pill {
+  border: 1px solid;
+  padding: var(--space-xs) var(--space-sm);
+  display: inline-flex;
+  gap: var(--space-xs);
+}
+
+.session-summary__row {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  border-bottom: 1px solid;
+  padding: var(--space-xs) 0;
+}
+
+.footer-disclaimer {
+  border-top: 1px solid;
+  padding: var(--space-md) var(--space-xl);
+  text-align: center;
+}
+
+.loading-overlay {
+  border: 1px solid;
+  padding: var(--space-lg);
+  text-align: center;
+}
+
+/* =======================================================
+   RESPONSIVE BREAKPOINTS
+   Desktop: >= 1440px  (default styles above)
+   Laptop:  1024px - 1439px
+   Tablet:  768px - 1023px
+   Below 768px: stacked fallback (no horizontal scroll)
+   ======================================================= */
+
+/* ---- Laptop ---- */
+@media (max-width: 1439px) {
+  .main-content {
+    padding: var(--space-lg);
+    gap: var(--space-lg);
+  }
+
+  .panels-row,
+  .bottom-row {
+    gap: var(--space-lg);
+  }
+}
+
+/* ---- Tablet: collapse 3-col panels to 1-col, keep sidebar ---- */
+@media (max-width: 1023px) {
+  .panels-row {
+    grid-template-columns: 1fr;
+  }
+
+  .bottom-row {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .sidebar {
+    width: clamp(180px, 24vw, 220px);
+  }
+}
+
+/* ---- Small tablet / large mobile: sidebar moves to top, full stack ---- */
+@media (max-width: 767px) {
+  .body {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    flex-direction: row;
+    flex-wrap: wrap;
+    border-right: none;
+    border-bottom: 1px solid;
+  }
+
+  .navbar ul {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .quick-controls {
+    flex: 1;
+    min-width: 220px;
+  }
+
+  .bottom-row {
+    grid-template-columns: 1fr;
+  }
+
+  .top-bar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.nav-link {
+  display: block;
+  text-decoration: none;
+  padding: var(--space-sm);
+  border: 1px solid transparent;
+}
+
+.nav-link--active {
+  border: 1px solid;
+  font-weight: bold;
+}
+
+.about-page {
+  padding: var(--space-xl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+===== src/components/KeyExchangeVisualizer/KeyExchangeVisualizer.jsx =====
+export default function KeyExchangeVisualizer() {
+  return (
+    <div className="key-exchange-visualizer">
+      <p>[Alice Icon]</p>
+      <p>-- [Photon Stream Placeholder] --</p>
+      <p>[Bob Icon]</p>
+    </div>
+  );
+}
+
+===== src/components/QuickControls/QuickControls.jsx =====
+export default function QuickControls({
+  noiseLevel,
+  setNoiseLevel,
+  eveEnabled,
+  setEveEnabled,
+}) {
+  return (
+    <div className="quick-controls">
+      <p>Quick Controls</p>
+
+      <div className="quick-controls__row">
+        <label htmlFor="noise-slider">Noise Level</label>
+        <input
+          id="noise-slider"
+          type="range"
+          min="0"
+          max="20"
+          value={noiseLevel}
+          onChange={(e) => setNoiseLevel(Number(e.target.value))}
+        />
+        <span>{noiseLevel}%</span>
+      </div>
+
+      <div className="quick-controls__row">
+        <label htmlFor="eve-toggle">Eve Interference</label>
+        <input
+          id="eve-toggle"
+          type="checkbox"
+          checked={eveEnabled}
+          onChange={(e) => setEveEnabled(e.target.checked)}
+        />
+        <span>{eveEnabled ? "ON" : "OFF"}</span>
+      </div>
+
+      <button>Run Simulation</button>
+    </div>
+  );
+}
+
+===== src/components/Navbar/Navbar.jsx =====
+import { NavLink } from "react-router-dom";
+
+export default function Navbar() {
+  return (
+    <nav className="navbar">
+      <ul>
+        <li>
+          <NavLink
+            to="/"
+            end
+            className={({ isActive }) => (isActive ? "nav-link nav-link--active" : "nav-link")}
+          >
+            Dashboard
+          </NavLink>
+        </li>
+        <li>
+          <NavLink
+            to="/analytics"
+            className={({ isActive }) => (isActive ? "nav-link nav-link--active" : "nav-link")}
+          >
+            Analytics
+          </NavLink>
+        </li>
+        <li>
+          <NavLink
+            to="/about"
+            className={({ isActive }) => (isActive ? "nav-link nav-link--active" : "nav-link")}
+          >
+            About
+          </NavLink>
+        </li>
+      </ul>
+    </nav>
+  );
+}
+
+===== src/components/BobPanel/BobPanel.jsx =====
+import { useState } from "react";
+import ChatWindow from "../ChatWindow/ChatWindow";
+
+const bobMessages = [
+  { id: 1, sender: "Alice", time: "--:--", text: "Placeholder received message" },
+];
+
+const quickReplies = ["Hi Alice! I'm good.", "Hello Alice!", "Let's continue."];
+
+export default function BobPanel() {
+  const [reply, setReply] = useState("");
+
+  return (
+    <section className="bob-panel">
+      <p>Bob (Receiver) — [Status: Online]</p>
+      <ChatWindow title="Bob Chat" messages={bobMessages} />
+
+      <div className="bob-panel__decrypted">
+        <p>[Decrypted Message Placeholder]</p>
+        <p>Status: [Successfully Decrypted Placeholder]</p>
+      </div>
+
+      <div className="bob-panel__quick-reply">
+        <p>Quick Reply</p>
+        <div className="bob-panel__reply-options">
+          {quickReplies.map((text) => (
+            <button key={text} onClick={() => setReply(text)}>
+              {text}
+            </button>
+          ))}
+        </div>
+        <input
+          placeholder="Type your reply..."
+          value={reply}
+          onChange={(e) => setReply(e.target.value)}
+        />
+      </div>
+    </section>
+  );
+}
+
+===== src/components/ProgressTimeline/ProgressTimeline.jsx =====
+const steps = [
+  { id: 1, title: "Preparing Photons" },
+  { id: 2, title: "Sending Photons" },
+  { id: 3, title: "Bob Measuring" },
+  { id: 4, title: "Basis Comparison / Sifting" },
+  { id: 5, title: "QBER Estimation" },
+  { id: 6, title: "Shared Key Generation" },
+  { id: 7, title: "Message Encryption" },
+  { id: 8, title: "Ciphertext Transmission" },
+];
+
+export default function ProgressTimeline() {
+  return (
+    <ol className="progress-timeline">
+      {steps.map((step) => (
+        <li key={step.id} className="progress-timeline__step">
+          <p>[Icon]</p>
+          <p>{step.id}. {step.title}</p>
+          <p>[Status]</p>
+        </li>
+      ))}
+    </ol>
+  );
+}
+
+===== src/components/LoadingOverlay/LoadingOverlay.jsx =====
+cat > src/components/LoadingOverlay/LoadingOverlay.jsx << 'EOF'
+export default function LoadingOverlay() {
+  return (
+    <div className="loading-overlay">
+      <p>[Loading Overlay Placeholder]</p>
+    </div>
+  );
+}
+EOF
+
+===== src/components/MessageComposer/MessageComposer.jsx =====
+import { useState } from "react";
+
+const MAX_LENGTH = 500;
+
+export default function MessageComposer() {
+  const [message, setMessage] = useState("");
+
+  const handleSend = () => {
+    if (!message.trim()) return;
+    console.log("Send placeholder:", message);
+    setMessage("");
+  };
+
+  return (
+    <div className="message-composer">
+      <label htmlFor="message-input">Compose Message</label>
+      <textarea
+        id="message-input"
+        placeholder="Type your message..."
+        rows={4}
+        maxLength={MAX_LENGTH}
+        value={message}
+        onChange={(e) => setMessage(e.target.value)}
+      />
+      <p>{message.length} / {MAX_LENGTH}</p>
+      <button onClick={handleSend} disabled={!message.trim()}>
+        Send Message
+      </button>
+    </div>
+  );
+}
+
+===== src/components/QuantumChannelPanel/QuantumChannelPanel.jsx =====
+import ProgressTimeline from "../ProgressTimeline/ProgressTimeline";
+import KeyExchangeVisualizer from "../KeyExchangeVisualizer/KeyExchangeVisualizer";
+
+export default function QuantumChannelPanel() {
+  return (
+    <section className="quantum-channel-panel">
+      <p>Quantum Channel (BB84 Protocol)</p>
+
+      <ProgressTimeline />
+      <KeyExchangeVisualizer />
+
+      <div className="quantum-channel-panel__banner">
+        <p>[Result Banner Placeholder — e.g. "Quantum Key Established Successfully"]</p>
+      </div>
+    </section>
+  );
+}
+
+===== src/components/AnalyticsChart/AnalyticsChart.jsx =====
+export default function AnalyticsChart() {
+  return (
+    <div className="analytics-chart">
+      <p>[Chart Placeholder — Sent vs Received Photons over Time]</p>
+    </div>
+  );
+}
+
+===== src/components/StatusPill/StatusPill.jsx =====
+export default function StatusPill({ label, value }) {
+  return (
+    <div className="status-pill">
+      <span>{label}:</span>
+      <span>{value}</span>
+    </div>
+  );
+}
+
+===== src/components/SessionSummary/SessionSummary.jsx =====
+const summary = [
+  { label: "Start Time", value: "--:--:--" },
+  { label: "Duration", value: "00:00:00" },
+  { label: "Noise Level", value: "0%" },
+  { label: "Eve Interference", value: "OFF" },
+  { label: "Status", value: "placeholder" },
+  { label: "Session ID", value: "placeholder" },
+];
+
+export default function SessionSummary() {
+  return (
+    <div className="session-summary">
+      <p>Session Summary</p>
+      {summary.map((row) => (
+        <div key={row.label} className="session-summary__row">
+          <span>{row.label}</span>
+          <span>{row.value}</span>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+===== src/components/TopBar/TopBar.jsx =====
+import StatusPill from "../StatusPill/StatusPill";
+
+export default function TopBar({ noiseLevel, eveEnabled }) {
+  return (
+    <header className="top-bar">
+      <div className="top-bar__brand">
+        <p>[Logo]</p>
+        <div>
+          <p>App Name</p>
+          <p>App Subtitle</p>
+        </div>
+      </div>
+
+      <div className="top-bar__pills">
+        <StatusPill label="Noise Level" value={`${noiseLevel}%`} />
+        <StatusPill label="Eve Interference" value={eveEnabled ? "ON" : "OFF"} />
+      </div>
+
+      <button>Reset Simulation</button>
+    </header>
+  );
+}
+
+===== src/components/StatusCard/StatusCard.jsx =====
+export default function StatusCard({ label, value }) {
+    return (
+      <div className="status-card">
+        <p className="status-card__label">{label}</p>
+        <p className="status-card__value">{value}</p>
+      </div>
+    );
+  }
+
+===== src/components/AlicePanel/AlicePanel.jsx =====
+import MessageComposer from "../MessageComposer/MessageComposer";
+import ChatWindow from "../ChatWindow/ChatWindow";
+
+const aliceMessages = [
+  { id: 1, sender: "You", time: "--:--", text: "Placeholder sent message" },
+];
+
+export default function AlicePanel() {
+  return (
+    <section className="alice-panel">
+      <p>Alice (Sender) — [Status: Online]</p>
+      <MessageComposer />
+      <ChatWindow title="Alice Chat" messages={aliceMessages} />
+    </section>
+  );
+}
+
+===== src/components/ChatWindow/ChatWindow.jsx =====
+export default function ChatWindow({ title, messages }) {
+    return (
+      <div className="chat-window">
+        <p>{title}</p>
+        <div className="chat-window__messages">
+          {messages.map((msg) => (
+            <div key={msg.id} className="chat-window__bubble">
+              <p>{msg.sender} — {msg.time}</p>
+              <p>{msg.text}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+===== src/main.jsx =====
+import React from "react";
+import ReactDOM from "react-dom/client";
+import App from "./App";
+import "./styles/globals.css";
+
+ReactDOM.createRoot(document.getElementById("root")).render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);
+
+===== src/App.jsx =====
+import AppRouter from "./routes/AppRouter";
+
+function App() {
+  return <AppRouter />;
+}
+
+export default App;
+
+===== src/data/mockData.js =====
+
+
+===== src/pages/About/About.jsx =====
+export default function About() {
+    return (
+      <div className="about-page">
+        <h1>About</h1>
+        <p>
+          Quantum Secure Messenger is an educational simulation demonstrating
+          the BB84 Quantum Key Distribution protocol, followed by AES-256
+          message encryption between Alice and Bob.
+        </p>
+        <p>[Placeholder — project description, team info, tech stack, etc.]</p>
+      </div>
+    );
+  }
+
+===== src/pages/Dashboard/Dashboard.jsx =====
+import { useState } from "react";
+import TopBar from "../../components/TopBar/TopBar";
+import Navbar from "../../components/Navbar/Navbar";
+import QuickControls from "../../components/QuickControls/QuickControls";
+import AlicePanel from "../../components/AlicePanel/AlicePanel";
+import QuantumChannelPanel from "../../components/QuantumChannelPanel/QuantumChannelPanel";
+import BobPanel from "../../components/BobPanel/BobPanel";
+import StatusCard from "../../components/StatusCard/StatusCard";
+import AnalyticsChart from "../../components/AnalyticsChart/AnalyticsChart";
+import SessionSummary from "../../components/SessionSummary/SessionSummary";
+
+export default function Dashboard() {
+  const [noiseLevel, setNoiseLevel] = useState(3);
+  const [eveEnabled, setEveEnabled] = useState(false);
+
+  return (
+    <div className="app-shell">
+      <TopBar noiseLevel={noiseLevel} eveEnabled={eveEnabled} />
+
+      <div className="body">
+        <aside className="sidebar">
+          <Navbar />
+          <QuickControls
+            noiseLevel={noiseLevel}
+            setNoiseLevel={setNoiseLevel}
+            eveEnabled={eveEnabled}
+            setEveEnabled={setEveEnabled}
+          />
+        </aside>
+
+        <main className="main-content">
+          <div className="panels-row">
+            <AlicePanel />
+            <QuantumChannelPanel />
+            <BobPanel />
+          </div>
+
+          <div className="bottom-row">
+            <div className="quantum-statistics">
+              <p>Quantum Statistics</p>
+              <StatusCard label="QBER" value="--%" />
+              <StatusCard label="Key Length" value="-- bits" />
+              <StatusCard label="Photons Sent" value="----" />
+            </div>
+
+            <div className="photon-chart">
+              <p>Photon Transmission Overview</p>
+              <AnalyticsChart />
+            </div>
+
+            <SessionSummary />
+          </div>
+        </main>
+      </div>
+
+      <footer className="footer-disclaimer">
+        <p>[Disclaimer Placeholder]</p>
+      </footer>
+    </div>
+  );
+}
+
+===== src/pages/Analytics/Analytics.jsx =====
+export default function Analytics() {
+    return <h1>Analytics</h1>;
+  }
+
+===== src/routes/AppRouter.jsx =====
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Dashboard from "../pages/Dashboard/Dashboard";
+import Analytics from "../pages/Analytics/Analytics";
+import About from "../pages/About/About";
+
+export default function AppRouter() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Dashboard />} />
+        <Route path="/analytics" element={<Analytics />} />
+        <Route path="/about" element={<About />} />
+      </Routes>
+    </BrowserRouter>
+  );
+}
+
+===== src/services/api.js =====

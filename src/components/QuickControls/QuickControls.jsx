@@ -3,11 +3,11 @@ export default function QuickControls({
   setNoiseLevel,
   eveEnabled,
   setEveEnabled,
+  onRun,
 }) {
   return (
     <div className="quick-controls">
       <p>Quick Controls</p>
-
       <div className="quick-controls__row">
         <label htmlFor="noise-slider">Noise Level</label>
         <input
@@ -20,7 +20,6 @@ export default function QuickControls({
         />
         <span>{noiseLevel}%</span>
       </div>
-
       <div className="quick-controls__row">
         <label htmlFor="eve-toggle">Eve Interference</label>
         <input
@@ -31,8 +30,7 @@ export default function QuickControls({
         />
         <span>{eveEnabled ? "ON" : "OFF"}</span>
       </div>
-
-      <button>Run Simulation</button>
+      <button onClick={onRun}>Run Simulation</button>
     </div>
   );
 }
