@@ -1,349 +1,649 @@
+# Quantum Secure Messenger (Frontend_BB84) — Project Status & Backend Integration Guide
 
-# Frontend_BB84
+## Project Overview
 
-A React + Vite frontend for an interactive **Quantum Secure Messenger** that demonstrates how the **BB84 Quantum Key Distribution (QKD) protocol** enables secure communication between two users, Alice and Bob.
+This project is a React-based frontend visualization of a **Quantum Secure Messaging System using the BB84 Quantum Key Distribution protocol**.
 
-The application visualises every stage of the quantum communication process, from photon preparation and transmission to key generation, message encryption, and successful decryption.
+The goal is to simulate a secure communication channel between **Alice and Bob**, where:
 
----
+1. A user starts a conversation from either Alice or Bob.
+2. BB84 quantum key exchange runs before the first message transmission.
+3. Quantum channel events are visualized:
 
-# Project Overview
+   * Photon preparation
+   * Photon transmission
+   * Receiver measurement
+   * Basis comparison / sifting
+   * QBER estimation
+   * Shared key generation
+   * Message encryption
+   * Ciphertext transmission
+4. If the quantum channel is compromised (Eve attack), BB84 aborts the transmission.
 
-This project serves as the frontend for a Quantum Secure Messenger simulator developed as part of our quantum cryptography project.
-
-Rather than focusing only on sending encrypted messages, the application demonstrates **how quantum mechanics can be used to establish a secure cryptographic key** before any classical encryption takes place.
-
-The frontend provides an intuitive dashboard where users can observe each stage of the BB84 protocol while interacting with a modern messaging interface.
-
-The backend performs all protocol simulation, quantum calculations, key generation, encryption, QBER estimation, and message processing. The frontend visualises those results in real time.
-
----
-
-# Project Objectives
-
-The primary objectives of this project are to:
-
-* Demonstrate the BB84 Quantum Key Distribution protocol
-* Simulate secure communication between Alice and Bob
-* Visualise every stage of the quantum communication process
-* Display security metrics such as QBER and key length
-* Provide an educational and interactive quantum cryptography demonstration
-* Connect a React frontend with a FastAPI backend
+The frontend currently contains a complete UI simulation layer using mock data and API placeholders.
 
 ---
 
-# How the System Works
+# Current Frontend Architecture
 
-The complete workflow is illustrated below.
+## Main Components
 
-## Phase 1 — User Interaction
-
-The sender (Alice) begins by:
-
-1. Selecting the communication channel.
-2. Configuring channel noise.
-3. Enabling or disabling Eve (eavesdropper) simulation.
-4. Writing a plaintext message.
-5. Starting the secure transmission.
-
----
-
-## Phase 2 — BB84 Quantum Key Distribution
-
-After the user starts the simulation, the backend performs the BB84 protocol.
-
-The protocol proceeds through the following stages:
-
-1. Random bit generation
-2. Random basis generation
-3. Photon preparation
-4. Photon transmission
-5. Bob's random basis measurement
-6. Basis comparison
-7. Key sifting
-8. QBER estimation
-9. Shared secret key generation
-
-The frontend visualises every one of these steps.
-
----
-
-## Phase 3 — Secure Communication
-
-Once a secure shared key has been generated:
-
-1. The plaintext message is encrypted.
-2. Ciphertext is transmitted.
-3. Bob receives the ciphertext.
-4. Bob decrypts the message using the shared key.
-5. The decrypted message is displayed.
-
----
-
-## Phase 4 — Results & Analytics
-
-After communication completes, the dashboard displays:
-
-* Quantum Bit Error Rate (QBER)
-* Shared key length
-* Number of photons transmitted
-* Communication status
-* Simulation duration
-* Channel configuration
-* Session summary
-
----
-
-# Frontend Responsibilities
-
-The frontend is responsible for:
-
-* Interactive dashboard
-* Alice and Bob communication panels
-* Message composition
-* Chat interface
-* BB84 workflow visualisation
-* Quantum channel animation
-* Session monitoring
-* Analytics dashboard
-* Communication history
-* Backend API integration
-* Responsive interface
-
----
-
-# Current Frontend Structure
-
-```text
-src/
+```
+src
 │
-├── assets/
-│   ├── images/
-│   └── icons/
+├── components
 │
-├── components/
-│   ├── AlicePanel/
-│   ├── AnalyticsChart/
-│   ├── BobPanel/
-│   ├── ChatWindow/
-│   ├── KeyExchangeVisualizer/
-│   ├── LoadingOverlay/
-│   ├── MessageComposer/
-│   ├── Navbar/
-│   ├── ProgressTimeline/
-│   ├── QuantumChannelPanel/
-│   ├── QuickControls/
-│   ├── SessionSummary/
-│   ├── StatusCard/
-│   ├── StatusPill/
-│   └── TopBar/
+├── AlicePanel
+│   └── AlicePanel.jsx
 │
-├── data/
+├── BobPanel
+│   └── BobPanel.jsx
+│
+├── QuantumChannelPanel
+│   └── QuantumChannelPanel.jsx
+│
+├── ProgressTimeline
+│   └── ProgressTimeline.jsx
+│
+├── MessageComposer
+│   └── MessageComposer.jsx
+│
+├── ChatWindow
+│   └── ChatWindow.jsx
+│
+├── QuickControls
+│   └── QuickControls.jsx
+│
+├── KeyExchangeVisualizer
+│
+├── AnalyticsChart
+│
+├── SessionSummary
+│
+├── data
 │   └── mockData.js
 │
-├── pages/
-│   ├── Dashboard/
-│   ├── Analytics/
-│   └── History/
-│
-├── routes/
-│   └── AppRouter.jsx
-│
-├── services/
-│   └── api.js
-│
-├── styles/
-│   ├── globals.css
-│   └── variables.css
-│
-├── App.jsx
-└── main.jsx
+└── services
+    └── api.js
 ```
 
 ---
 
-# Main Pages
+# Current Features Implemented
 
-## Dashboard
+## 1. Two-way Communication
 
-The primary interface of the application.
+Both Alice and Bob can initiate conversations.
 
-Includes:
+Example:
 
-* Alice panel
-* Bob panel
-* Secure messaging interface
-* BB84 protocol timeline
-* Quantum channel visualisation
-* Simulation controls
-* Session statistics
+### Alice starts
 
----
-
-## Analytics
-
-Displays simulation metrics including:
-
-* QBER
-* Key generation statistics
-* Photon transmission statistics
-* Future performance visualisations
-
----
-
-## History
-
-Stores previous communication sessions including:
-
-* Session metadata
-* Security status
-* QBER
-* Generated key length
-* Communication logs
-
----
-
-# Technology Stack
-
-### Frontend
-
-* React
-* Vite
-* JavaScript
-* React Router
-* CSS3
-
-### Backend (Planned)
-
-* FastAPI
-* Python
-* NumPy
-* Qiskit (if required)
-* REST APIs
-
----
-
-# Backend Integration
-
-During initial development the frontend uses mock data.
-
-Later the backend will expose REST endpoints that return:
-
-* Simulation status
-* Generated shared keys
-* QBER
-* Photon statistics
-* Encryption results
-* Session information
-
-The frontend will consume these APIs without major structural changes.
-
----
-
-# Development Roadmap
-
-## Phase 1 (Completed)
-
-* Project setup
-* React + Vite configuration
-* Routing
-* Folder architecture
-* Component architecture
-* Initial page layout
-* Placeholder UI
-
----
-
-## Phase 2 (Current)
-
-* UI development
-* Responsive layout
-* Component styling
-* Quantum channel visualisation
-* Dashboard refinement
-
----
-
-## Phase 3
-
-* Mock API integration
-* Interactive simulation
-* State management
-* Loading states
-* Error handling
-
----
-
-## Phase 4
-
-Backend integration:
-
-* BB84 implementation
-* API connectivity
-* Live simulation
-* Secure message exchange
-* Real-time status updates
-
----
-
-## Phase 5
-
-Future improvements:
-
-* Multi-user communication
-* Multiple quantum channels
-* Advanced analytics
-* Dark mode improvements
-* Better animations
-* Accessibility enhancements
-
----
-
-# Running the Project
-
-Install dependencies:
-
-```bash
-npm install
+```
+Alice writes message
+        ↓
+BB84 runs
+        ↓
+Key generated
+        ↓
+Message encrypted
+        ↓
+Bob receives
 ```
 
-Start the development server:
+### Bob starts
 
-```bash
-npm run dev
+```
+Bob writes message
+        ↓
+BB84 runs
+        ↓
+Key generated
+        ↓
+Message encrypted
+        ↓
+Alice receives
 ```
 
-The application will be available at:
+The first sender triggers the quantum key exchange.
 
-```text
-http://localhost:5173
+After key establishment:
+
+* Alice ↔ Bob messages are instant
+* BB84 does not rerun for every message
+
+---
+
+# BB84 Simulation Flow
+
+The quantum channel has 8 stages:
+
+```
+1. Preparing Photons
+2. Sending Photons
+3. Receiver Measuring
+4. Basis Comparison / Sifting
+5. QBER Estimation
+6. Shared Key Generation
+7. Message Encryption
+8. Ciphertext Transmission
+```
+
+Each stage updates dynamically in:
+
+```
+ProgressTimeline.jsx
 ```
 
 ---
 
-# Project Status
+# QBER Behaviour
 
-**Current Progress**
+## Eve OFF (Normal Secure Channel)
 
-* React application configured
-* Routing implemented
-* Component architecture established
-* Dashboard layout created
-* Placeholder interface completed
+Current frontend simulation:
 
-**Next Milestone**
+```javascript
+qber = random value between 1% and 4%
+```
 
-* Complete UI styling
-* Add animations
-* Integrate mock APIs
-* Connect FastAPI backend
-* Implement live BB84 simulation
+Example outputs:
+
+```
+1.42%
+2.23%
+3.49%
+```
+
+Meaning:
+
+* Small errors due to channel noise
+* Secure key generation allowed
+
+Flow:
+
+```
+Preparing Photons        ✓
+Sending Photons          ✓
+Measurement              ✓
+Sifting                  ✓
+QBER Estimation          ✓
+
+QBER ≈ 1-4%
+
+Shared Key Generation    ✓
+Encryption               ✓
+Transmission             ✓
+Message Delivered        ✓
+```
 
 ---
 
-## One recommendation
+## Eve ON (Intercept-Resend Attack)
 
-I would rename the repository from **`Frontend_BB84`** to something like **`QuantumSecureMessenger`** or **`QuantumSecureMessenger-Frontend`** once your mentor approves. It better reflects the project's purpose than a name focused solely on the BB84 protocol.
+Current simulation:
+
+```javascript
+qber = 25%
+```
+
+Reason:
+
+BB84 intercept-resend produces approximately:
+
+```
+50% chance Eve chooses wrong basis
+
+50% chance wrong basis creates error
+
+0.5 × 0.5 = 0.25
+
+25% QBER
+```
+
+Flow:
+
+```
+Preparing Photons        ✓
+Sending Photons          ✓
+Measurement              ✓
+Sifting                  ✓
+QBER Estimation          ✕
+
+QBER = 25%
+
+Shared Key Generation    ✕
+Encryption               ✕
+Transmission             ✕
+Message Blocked
+```
+
+---
+
+# QBER Threshold Logic
+
+Implemented:
+
+```javascript
+ABORT_THRESHOLD = 11
+```
+
+Rules:
+
+| QBER  | Action                    |
+| ----- | ------------------------- |
+| 0-2%  | Excellent secure channel  |
+| 2-5%  | Acceptable                |
+| 5-11% | Error correction possible |
+| >11%  | Abort communication       |
+| ~25%  | Strong Eve detection      |
+
+---
+
+# Eve Detection Behaviour
+
+When:
+
+```
+QBER > 11%
+```
+
+The frontend:
+
+1. Changes session status:
+
+```javascript
+status:"aborted"
+```
+
+2. Rejects message transmission.
+
+3. Discards key:
+
+```javascript
+keyLength:0
+```
+
+4. Adds warning message:
+
+```
+⚠ BB84 Protocol Aborted
+
+High QBER detected.
+
+Possible eavesdropping detected.
+
+Shared key discarded.
+
+Message was NOT transmitted.
+```
+
+5. Locks message composer.
+
+User must:
+
+```
+Disable Eve
+↓
+Retry communication
+```
+
+---
+
+# Technical Details Section
+
+Implemented inside:
+
+```
+BobPanel.jsx
+```
+
+Shows:
+
+```
+Last Encrypted
+
+110010101011001010101001
+
+
+Last Message
+
+Hello Bob
+```
+
+Currently encryption value is mock data.
+
+After backend integration this should come from:
+
+Backend BB84 encryption result.
+
+---
+
+# Current Mock Data
+
+Currently:
+
+```javascript
+encryptedMessage:
+"110010101011001010101001"
+```
+
+QBER:
+
+```javascript
+Eve OFF:
+1-4%
+
+Eve ON:
+25%
+```
+
+Photon count:
+
+```
+512 photons
+```
+
+Key length:
+
+```
+256 bits
+```
+
+Session:
+
+```
+QKD-XXXX
+```
+
+---
+
+# Backend Integration Required
+
+Backend should provide real BB84 simulation results.
+
+Frontend already has:
+
+```
+src/services/api.js
+```
+
+Current endpoint:
+
+```javascript
+POST /simulate
+```
+
+Expected request:
+
+```json
+{
+ "message":"Hello Bob",
+ "noise_level":0,
+ "eve_enabled":false
+}
+```
+
+---
+
+Backend Response Should Be:
+
+```json
+{
+ "encrypted_message":"101010101010",
+
+ "decrypted_message":"Hello Bob",
+
+ "qber":2.31,
+
+ "photons_sent":512,
+
+ "key_length":256,
+
+ "session_id":"QKD-001",
+
+ "duration":"1.34s",
+
+ "secure":true
+}
+```
+
+---
+
+# After Backend Completion
+
+Replace:
+
+```
+mockSimulation()
+```
+
+with:
+
+```
+real backend response
+```
+
+Main files to modify:
+
+## MessageComposer.jsx
+
+Remove:
+
+```javascript
+runMockSimulation()
+```
+
+Use:
+
+```javascript
+const result = await runSimulation()
+```
+
+Already partially implemented.
+
+---
+
+## BobPanel.jsx
+
+Replace:
+
+```javascript
+encryptedMessage:
+"110010101011001010101001"
+```
+
+with:
+
+```javascript
+result.encrypted_message
+```
+
+Replace:
+
+```javascript
+qber:25
+```
+
+with:
+
+```javascript
+result.qber
+```
+
+---
+
+## api.js
+
+Update endpoint if backend changes.
+
+Currently:
+
+```javascript
+POST localhost:8000/simulate
+```
+
+---
+
+# Remaining Frontend Work After Backend
+
+## 1. Real-time animation
+
+Currently:
+
+```
+stage changes every 600ms
+```
+
+Future:
+
+Backend should stream:
+
+```
+Photon preparation started
+Photon sending started
+Measurement completed
+```
+
+using:
+
+* WebSocket
+* Server Sent Events
+
+---
+
+## 2. Better Quantum Visualization
+
+Replace placeholders:
+
+Current:
+
+```
+[Alice Icon]
+
+-- Photon Stream Placeholder --
+
+[Bob Icon]
+```
+
+Future:
+
+Animated:
+
+```
+Alice
+ |
+ |
+Photon pulses
+ |
+ |
+Bob
+```
+
+Include:
+
+* photon states
+* basis selection
+* sifted key bits
+
+---
+
+## 3. Better Encryption Visualization
+
+Show:
+
+```
+Original Message
+
+Hello Bob
+
+
+↓
+
+Encryption Key
+
+10101010101
+
+
+↓
+
+Ciphertext
+
+110101010
+```
+
+---
+
+## 4. Real Analytics
+
+Replace:
+
+```
+Chart Placeholder
+```
+
+with:
+
+* photons sent vs received
+* QBER graph
+* key generation rate
+* noise impact
+
+---
+
+## 5. UI Design Phase
+
+Current UI is functional but basic.
+
+Final design improvements:
+
+* Dark quantum theme
+* Better cards
+* Animated photon stream
+* Quantum circuit visuals
+* Better icons
+* Responsive mobile layout
+* Loading animations
+* Better status indicators
+
+---
+
+# Important Instruction For Future AI
+
+If more implementation details are required, ask for terminal commands:
+
+Example:
+
+```
+cat src/components/FileName/FileName.jsx
+```
+
+to inspect the exact current code before making changes.
+
+Do not rewrite the whole architecture.
+
+Only modify the required files while preserving:
+
+* existing BB84 flow
+* two-way communication
+* Eve detection logic
+* technical details section
+* backend API structure
+
+---
+
+**Current Status:**
+
+Frontend BB84 visualization: ✅ Complete
+Two-way messaging: ✅ Complete
+Eve detection logic: ✅ Complete
+Abort mechanism: ✅ Complete
+Technical details: ✅ Complete
+Backend connection: ⏳ Waiting
+Final UI polish: ⏳ Remaining
+Other pages except Dashboard like Analytics, About: ⏳ Remaining
+
+
 
 
 # 👥 Division of Work
@@ -368,7 +668,8 @@ I would rename the repository from **`Frontend_BB84`** to something like **`Quan
 
 - `pages/Analytics/Analytics.jsx`
 - `pages/About/About.jsx`
-- Any Analytics/About-specific components
+- `Final UI Design, logos, and overall interferenec`
+
 
 ### 🤝 Shared Files
 

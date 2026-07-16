@@ -9,25 +9,139 @@ const steps = [
   { id: 8, title: "Ciphertext Transmission" },
 ];
 
-export default function ProgressTimeline({ currentStage = 0 }) {
+
+export default function ProgressTimeline({
+  currentStage = 0,
+  failed = false
+}) {
+
+
   return (
+
     <ol className="progress-timeline">
-      {steps.map((step) => {
-        const completed = step.id <= currentStage;
-        const active = step.id === currentStage;
-        return (
-          <li
+
+
+      {
+        steps.map((step)=>{
+
+
+          const completed =
+          step.id < currentStage;
+
+
+          const active =
+          step.id === currentStage;
+
+
+
+          const failedStep =
+failed && step.id >= 5;
+
+
+
+          return (
+
+            <li
+
             key={step.id}
-            className={`progress-timeline__step
+
+            className={`
+              progress-timeline__step
               ${completed ? "completed" : ""}
-              ${active ? "active" : ""}`}
-          >
-            <p>{completed ? "✓" : active ? "●" : "○"}</p>
-            <p>{step.id}. {step.title}</p>
-            <p>{completed ? "Completed" : active ? "Running" : "Waiting"}</p>
-          </li>
-        );
-      })}
+              ${active ? "active" : ""}
+              ${failedStep ? "failed" : ""}
+            `}
+
+            >
+
+
+              <p>
+
+              {
+                failedStep
+
+                ?
+
+                "✕"
+
+                :
+
+                completed
+
+                ?
+
+                "✓"
+
+                :
+
+                active
+
+                ?
+
+                "●"
+
+                :
+
+                "○"
+              }
+
+              </p>
+
+
+
+              <p>
+                {step.id}. {step.title}
+              </p>
+
+
+
+              <p>
+
+              {
+                failedStep
+
+                ?
+
+                "Aborted"
+
+                :
+
+                completed
+
+                ?
+
+                "Completed"
+
+                :
+
+                active
+
+                ?
+
+                "Running"
+
+                :
+
+                "Waiting"
+
+              }
+
+              </p>
+
+
+
+            </li>
+
+          );
+
+
+        })
+
+      }
+
+
     </ol>
+
   );
+
 }

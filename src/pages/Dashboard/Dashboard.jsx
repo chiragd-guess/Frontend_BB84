@@ -67,12 +67,13 @@ export default function Dashboard() {
           <Navbar />
 
           <QuickControls
-            noiseLevel={noiseLevel}
-            setNoiseLevel={setNoiseLevel}
-            eveEnabled={eveEnabled}
-            setEveEnabled={setEveEnabled}
-            onRun={handleRun}
-          />
+  noiseLevel={noiseLevel}
+  setNoiseLevel={setNoiseLevel}
+  eveEnabled={eveEnabled}
+  setEveEnabled={setEveEnabled}
+  setSimulation={setSimulation}
+  onRun={handleRun}
+/>
 
         </aside>
 

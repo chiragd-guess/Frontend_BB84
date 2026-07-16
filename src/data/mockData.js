@@ -1,40 +1,44 @@
 export const initialSimulation = {
-    status: "idle",
-  
-    alice: {
-      recipient: "Bob",
-      message: "",
-    },
-  
-    bob: {
-      encryptedMessage: "",
-      decryptedMessage: "",
-    },
-  
-    channel: {
-      noise: 0,
-      eve: false,
-    },
-  
-    protocol: {
-      stage: 0,
-    },
-  
-    analytics: {
-      qber: 0,
-      photonsSent: 0,
-      keyLength: 0,
-    },
-  
-    session: {
-      id: "---",
-      secure: false,
-      duration: "00:00",
-    },
-  
-    messages: [],
-    bob_composer: "",
-  };
+  status: "idle",
+
+  alice: {
+    recipient: "Bob",
+    message: "",
+  },
+
+  bob: {
+    encryptedMessage: "",
+    decryptedMessage: "",
+  },
+
+  channel: {
+    noise: 0,
+    eve: false,
+  },
+
+  protocol: {
+    stage: 0,
+  },
+
+  analytics: {
+    qber: 0,
+    photonsSent: 0,
+    keyLength: 0,
+  },
+
+  session: {
+    id: "---",
+    secure: false,
+    duration: "00:00",
+  },
+
+  messages: [],
+
+  bob_composer: "",
+
+  // NEW
+  abortReason: "",
+};
   
   export const fakeSimulationResult = {
     status: "completed",

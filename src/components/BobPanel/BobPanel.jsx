@@ -3,6 +3,8 @@ import ChatWindow from "../ChatWindow/ChatWindow";
 
 const TOTAL_STAGES = 8;
 const STAGE_DELAY_MS = 600;
+const ABORT_THRESHOLD = 11;
+
 
 function timestamp() {
   return new Date().toLocaleTimeString([], {
@@ -11,10 +13,32 @@ function timestamp() {
   });
 }
 
+
+function createAbortMessage(qber) {
+  return {
+    id: Date.now(),
+    type: "system",
+    text:
+`⚠ BB84 Protocol Aborted
+
+High QBER detected (${qber}%).
+
+Possible eavesdropping detected.
+
+Shared key discarded.
+
+Message was NOT transmitted.`,
+  };
+}
+
+
+
 function runBB84(setSimulation, messageText) {
+
   let stage = 1;
 
   const interval = setInterval(() => {
+
 
     setSimulation((s) => ({
       ...s,
@@ -23,53 +47,157 @@ function runBB84(setSimulation, messageText) {
       },
     }));
 
+
+    // After QBER estimation
+    if (stage === 5) {
+
+      setTimeout(() => {
+
+        setSimulation((s) => {
+
+          const qber = s.channel.eve ? 25 : 2.23;
+
+
+          if (qber > ABORT_THRESHOLD) {
+
+
+            clearInterval(interval);
+
+
+            return {
+
+              ...s,
+
+              status:"aborted",
+
+              protocol:{
+                stage:5,
+              },
+
+
+              analytics:{
+                qber,
+
+                photonsSent:512,
+
+                keyLength:0,
+              },
+
+
+              session:{
+                ...s.session,
+
+                secure:false,
+              },
+
+
+              messages:[
+                ...s.messages,
+
+                createAbortMessage(qber),
+              ],
+
+
+              bob_composer:"",
+
+            };
+
+          }
+
+
+          return s;
+
+        });
+
+
+      }, 100);
+
+
+    }
+
+
+
     stage++;
 
+
+
+    // Continue only if secure
     if (stage > TOTAL_STAGES) {
+
 
       clearInterval(interval);
 
-      setSimulation((s) => ({
+
+
+      setSimulation((s)=>({
+
+
         ...s,
 
-        status: "completed",
 
-        protocol: {
-          stage: TOTAL_STAGES,
+        status:"completed",
+
+
+        protocol:{
+          stage:TOTAL_STAGES,
         },
 
-        bob: {
+
+        bob:{
+
           ...s.bob,
+
           encryptedMessage:
-            "110010101011001010101001",
+          "110010101011001010101001",
 
           decryptedMessage:
-            messageText,
+          messageText,
+
         },
 
-        analytics: {
-          qber: s.channel.eve ? 25 : 2.23,
-          photonsSent: 512,
-          keyLength: 256,
+
+        analytics:{
+
+          qber:s.channel.eve ? 25 : 2.23,
+
+          photonsSent:512,
+
+          keyLength:256,
+
         },
 
-        messages: [
+
+        messages:[
+
           ...s.messages,
+
           {
-            id: Date.now(),
-            sender: "Bob",
-            time: timestamp(),
-            text: messageText,
-          },
+
+            id:Date.now(),
+
+            sender:"Bob",
+
+            time:timestamp(),
+
+            text:messageText,
+
+          }
+
         ],
 
-        bob_composer: "",
+
+        bob_composer:"",
+
+
       }));
 
     }
 
+
   }, STAGE_DELAY_MS);
+
 }
+
 
 
 
@@ -78,7 +206,9 @@ export default function BobPanel({
   setSimulation,
 }) {
 
-  const [showTechnical, setShowTechnical] = useState(false);
+
+  const [showTechnical, setShowTechnical] =
+    useState(false);
 
 
   const reply =
@@ -93,11 +223,16 @@ export default function BobPanel({
     simulation.status === "running";
 
 
+  const isAborted =
+    simulation.status === "aborted";
+
+
 
   const handleChange = (e) => {
 
     setSimulation((prev) => ({
       ...prev,
+
       bob_composer: e.target.value,
     }));
 
@@ -113,7 +248,9 @@ export default function BobPanel({
 
     if (!keyEstablished) {
 
+
       setSimulation((prev) => ({
+
         ...prev,
 
         status: "running",
@@ -125,6 +262,7 @@ export default function BobPanel({
         initiator: "Bob",
 
         bob_composer: reply,
+
       }));
 
 
@@ -142,15 +280,21 @@ export default function BobPanel({
         ...prev,
 
         messages: [
+
           ...prev.messages,
 
           {
             id: Date.now(),
+
             sender: "Bob",
+
             time: timestamp(),
+
             text: reply,
           },
+
         ],
+
 
         bob_composer: "",
 
@@ -172,6 +316,7 @@ Bob
 </p>
 
 
+
 <ChatWindow
 
 title="Bob"
@@ -184,20 +329,30 @@ emptyText="Start a secure conversation..."
 
 
 
+
 <div className="message-composer">
 
 
 <label>
 
 {
+isAborted
+?
+"Message Blocked"
+
+:
+
 keyEstablished
 ?
 "Message Alice"
+
 :
 "Start Secure Conversation"
+
 }
 
 </label>
+
 
 
 
@@ -209,7 +364,15 @@ value={reply}
 
 onChange={handleChange}
 
-disabled={isRunning}
+disabled={isRunning || isAborted}
+
+placeholder={
+isAborted
+?
+"Eve interference detected. Disable Eve and retry."
+:
+"Type message..."
+}
 
 />
 
@@ -221,11 +384,18 @@ disabled={isRunning}
 
 
 
+
 <button
 
 onClick={handleSend}
 
-disabled={!reply.trim() || isRunning}
+disabled={
+!reply.trim()
+||
+isRunning
+||
+isAborted
+}
 
 >
 
@@ -241,6 +411,8 @@ isRunning
 
 
 </div>
+
+
 
 
 
@@ -272,6 +444,7 @@ showTechnical
 
 
 
+
 {
 showTechnical && (
 
@@ -289,7 +462,9 @@ Last Encrypted
 {simulation.bob.encryptedMessage}
 </code>
 
+
 </div>
+
 
 
 
@@ -306,8 +481,8 @@ simulation.messages[
 simulation.messages.length - 1
 ]?.text
 }
-
 </code>
+
 
 </div>
 

@@ -4,33 +4,146 @@ export default function QuickControls({
   eveEnabled,
   setEveEnabled,
   onRun,
+  setSimulation,
 }) {
+
+
+  const handleEveToggle = (e) => {
+
+    const enabled = e.target.checked;
+
+
+    setEveEnabled(enabled);
+
+
+    // Auto recover after Eve is removed
+    if (!enabled) {
+
+      setSimulation((prev) => {
+
+        if (prev.status !== "aborted") {
+          return prev;
+        }
+
+
+        return {
+
+          ...prev,
+
+          status: "idle",
+
+          protocol:{
+            stage:0,
+          },
+
+
+          analytics:{
+            qber:0,
+            photonsSent:0,
+            keyLength:0,
+          },
+
+
+          session:{
+            id:"---",
+            secure:false,
+            duration:"00:00",
+          },
+
+
+          abortReason:"",
+
+        };
+
+      });
+
+    }
+
+  };
+
+
+
   return (
+
     <div className="quick-controls">
+
       <p>Quick Controls</p>
+
+
       <div className="quick-controls__row">
-        <label htmlFor="noise-slider">Noise Level</label>
+
+        <label htmlFor="noise-slider">
+          Noise Level
+        </label>
+
+
         <input
+
           id="noise-slider"
+
           type="range"
+
           min="0"
+
           max="20"
+
           value={noiseLevel}
-          onChange={(e) => setNoiseLevel(Number(e.target.value))}
+
+          onChange={(e)=>
+            setNoiseLevel(Number(e.target.value))
+          }
+
         />
-        <span>{noiseLevel}%</span>
+
+
+        <span>
+          {noiseLevel}%
+        </span>
+
+
       </div>
+
+
+
+
       <div className="quick-controls__row">
-        <label htmlFor="eve-toggle">Eve Interference</label>
+
+
+        <label htmlFor="eve-toggle">
+          Eve Interference
+        </label>
+
+
+
         <input
+
           id="eve-toggle"
+
           type="checkbox"
+
           checked={eveEnabled}
-          onChange={(e) => setEveEnabled(e.target.checked)}
+
+          onChange={handleEveToggle}
+
         />
-        <span>{eveEnabled ? "ON" : "OFF"}</span>
+
+
+        <span>
+          {eveEnabled ? "ON" : "OFF"}
+        </span>
+
+
       </div>
-      <button onClick={onRun}>Run Simulation</button>
+
+
+
+      <button onClick={onRun}>
+        Run Simulation
+      </button>
+
+
     </div>
+
   );
+
 }
