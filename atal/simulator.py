@@ -12,7 +12,6 @@ need to call
 
 simulator.run()
 
-to perform a complete BB84 simulation.
 ===========================================================
 """
 
