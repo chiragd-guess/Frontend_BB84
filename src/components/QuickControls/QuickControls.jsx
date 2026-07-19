@@ -1,145 +1,249 @@
 import ThemeToggle from "../ui/ThemeToggle";
+
+
 export default function QuickControls({
+
   noiseLevel,
-  setNoiseLevel,
+
+  onNoiseChange,
+
   eveEnabled,
-  setEveEnabled,
+
+  onEveChange,
+
   onRun,
+
   setSimulation,
+
 }) {
+
 
 
   const handleEveToggle = (e) => {
 
+
     const enabled = e.target.checked;
 
 
-    setEveEnabled(enabled);
+
+    onEveChange(enabled);
 
 
-    // Auto recover after Eve is removed
-    if (!enabled) {
+
+    // Recover if Eve is removed after abort
+    if (!enabled && setSimulation) {
+
 
       setSimulation((prev) => {
 
+
         if (prev.status !== "aborted") {
+
           return prev;
+
         }
+
 
 
         return {
 
+
           ...prev,
+
 
           status: "idle",
 
-          protocol:{
-            stage:0,
+
+          protocol: {
+
+            stage: 0,
+
           },
 
 
-          analytics:{
-            qber:0,
-            photonsSent:0,
-            keyLength:0,
+          analytics: {
+
+            qber: 0,
+
+            photonsSent: 0,
+
+            keyLength: 0,
+
           },
 
 
-          session:{
-            id:"---",
-            secure:false,
-            duration:"00:00",
+          session: {
+
+            id: "---",
+
+            secure: false,
+
+            duration: "00:00",
+
           },
 
 
-          abortReason:"",
+          abortReason: "",
+
 
         };
+
 
       });
 
     }
 
+
   };
+
+
 
 
 
   return (
 
+
     <div className="quick-controls">
 
-      <p>Quick Controls</p>
+
+
+      <p>
+        Quick Controls
+      </p>
+
+
+
 
 
       <div className="quick-controls__row">
+
+
 
         <label htmlFor="noise-slider">
-          Noise 
+
+          Noise
+
         </label>
 
 
-       
-        <input
-  className="noise-slider"
-  id="noise-slider"
-  type="range"
-  min="0"
-  max="20"
-  step="1"
-  value={noiseLevel}
-  onChange={(e)=>setNoiseLevel(Number(e.target.value))}
-/>
-
-
-        <span>
-          {noiseLevel}%
-        </span>
-
-
-      </div>
-
-
-
-
-      <div className="quick-controls__row">
-
-
-        <label htmlFor="eve-toggle">
-          Eve
-        </label>
 
 
 
         <input
 
-          id="eve-toggle"
+          className="noise-slider"
 
-          type="checkbox"
+          id="noise-slider"
 
-          checked={eveEnabled}
+          type="range"
 
-          onChange={handleEveToggle}
+          min="0"
+
+          max="20"
+
+          step="1"
+
+          value={noiseLevel}
+
+          onChange={(e)=>
+
+            onNoiseChange(Number(e.target.value))
+
+          }
 
         />
 
 
+
+
+
         <span>
-          {eveEnabled ? "ON" : "OFF"}
+
+          {noiseLevel}%
+
         </span>
+
+
 
 
       </div>
 
 
 
-      <button onClick={onRun}>
-  Run Simulation
-</button>
 
-<ThemeToggle />
+
+
+
+      <div className="quick-controls__row">
+
+
+
+        <label htmlFor="eve-toggle">
+
+          Eve
+
+        </label>
+
+
+
+
+
+        <input
+
+
+          id="eve-toggle"
+
+
+          type="checkbox"
+
+
+          checked={eveEnabled}
+
+
+          onChange={handleEveToggle}
+
+
+        />
+
+
+
+
+
+        <span>
+
+          {eveEnabled ? "ON" : "OFF"}
+
+        </span>
+
+
+
+
+      </div>
+
+
+
+
+
+
+
+
+      <button onClick={onRun}>
+
+        Run Simulation
+
+      </button>
+
+
+
+
+
+
+      <ThemeToggle />
+
 
 
     </div>
+
 
   );
 
