@@ -1,4 +1,4 @@
-import { createInitialSimulation } from "../data/mockData";
+import { createInitialSimulation } from "../data/initialstate";
 
 
 export function updateNoise(setSimulation, value) {

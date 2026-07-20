@@ -65,13 +65,25 @@ class Alice:
 
     def encode_all_photons(self):
 
-        """
-        Convert every bit into a polarized photon.
-        """
+        self.photons = []
 
-        for bit, basis in zip(self.bits, self.bases):
+        for index, (bit, basis) in enumerate(
 
-            photon = encode_photon(bit, basis)
+            zip(self.bits, self.bases),
+
+            start=1
+
+        ):
+
+            photon = encode_photon(
+
+                bit=bit,
+
+                basis=basis,
+
+                photon_id=index
+
+            )
 
             self.photons.append(photon)
 

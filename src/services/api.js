@@ -12,11 +12,31 @@ async function request(path, options = {}) {
   return res.json();
 }
 
-export async function runSimulation({ message, noise, eve }) {
-  return request("/simulate", {
-    method: "POST",
-    body: JSON.stringify({ message, noise_level: noise, eve_enabled: eve }),
+export async function runSimulation({
+  noise,
+  eve,
+  num_photons,
+  message
+})  {
+
+  return request("/simulate",{
+
+    method:"POST",
+
+    body:JSON.stringify({
+
+      noise,
+
+      eve,
+
+      num_photons,
+      
+      message
+
+    })
+
   });
+
 }
 
 export async function resetSession() {
@@ -25,4 +45,19 @@ export async function resetSession() {
 
 export async function getSessionHistory() {
   return request("/history");
+}
+
+export async function encryptMessage(message, key) {
+
+  return request("/encrypt", {
+
+    method:"POST",
+
+    body:JSON.stringify({
+      message,
+      key
+    })
+
+  });
+
 }

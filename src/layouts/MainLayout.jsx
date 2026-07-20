@@ -5,7 +5,7 @@ import TopBar from "../components/TopBar/TopBar";
 import Navbar from "../components/Navbar/Navbar";
 import QuickControls from "../components/QuickControls/QuickControls";
 
-import { createInitialSimulation } from "../data/mockData";
+import { createInitialSimulation } from "../data/initialstate";
 
 import { runSimulation } from "../services/simulationService";
 

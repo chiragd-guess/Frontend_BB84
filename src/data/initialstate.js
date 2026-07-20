@@ -7,6 +7,8 @@ export function createInitialSimulation() {
     alice: {
       recipient: "Bob",
       message: "",
+      encryptedMessage: "",
+      decryptedMessage: "",
     },
 
     bob: {
